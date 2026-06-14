@@ -64,17 +64,15 @@ function showToast(msg) {
 /* ---------- 3. Curtain reveal ---------- */
 (function curtain() {
   const el = document.getElementById("curtain");
-  const seen = localStorage.getItem("curtainSeen") === "1";
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (seen || reduce) {
+  if (reduce) {
     el.classList.add("hidden");
     return;
   }
   // small delay so initial paint completes
   setTimeout(() => {
     el.classList.add("open");
-    localStorage.setItem("curtainSeen", "1");
     // remove from layer after animation
     setTimeout(() => el.classList.add("hidden"), 2200);
   }, 350);
@@ -194,13 +192,6 @@ function showToast(msg) {
     album.href = entry.albumUrl;
     prompt.hidden = true;
     reveal.hidden = false;
-    localStorage.setItem("gateUnlocked", JSON.stringify(entry));
-  }
-
-  // restore previous unlock
-  const prior = localStorage.getItem("gateUnlocked");
-  if (prior) {
-    try { unlock(JSON.parse(prior)); } catch {}
   }
 
   form.addEventListener("submit", async e => {
@@ -209,46 +200,64 @@ function showToast(msg) {
     if (!typed) return;
     const hash = await sha256Hex(typed);
     const match = CONFIG.gate.find(g => g.passphraseHash === hash);
-    if (match) {
-      hint.textContent = "";
-      unlock(match);
-    } else {
-      hint.textContent = "Hmm, not quite — try again.";
-      input.value = "";
-      input.focus();
-    }
+    if (match) unlock(match);
+    // Wrong answer: silently do nothing. Easter-egg vibe.
   });
 })();
 
-/* ---------- 8. Music toggle ---------- */
+/* ---------- 8. Music: auto-play on first user gesture, with toggle ---------- */
 (function music() {
   const btn = document.getElementById("music-toggle");
   const audio = document.getElementById("bg-audio");
+  audio.volume = 0.5;
   let playing = false;
 
-  btn.addEventListener("click", async () => {
+  function setState(on) {
+    playing = on;
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+
+  async function tryPlay() {
+    try {
+      await audio.play();
+      setState(true);
+    } catch {
+      // First gesture didn't unlock it; user can still tap the toggle.
+    }
+  }
+
+  // Try immediately (will succeed in Safari iOS sometimes, fail in Chrome).
+  tryPlay();
+
+  // On the very first user gesture, start music.
+  function firstGesture() {
+    cleanup();
+    if (!playing) tryPlay();
+  }
+  function cleanup() {
+    ["pointerdown", "keydown", "touchstart", "scroll"].forEach(ev =>
+      window.removeEventListener(ev, firstGesture, true)
+    );
+  }
+  ["pointerdown", "keydown", "touchstart", "scroll"].forEach(ev =>
+    window.addEventListener(ev, firstGesture, { capture: true, once: false, passive: true })
+  );
+
+  // Manual toggle (always works).
+  btn.addEventListener("click", async e => {
+    e.stopPropagation();
     if (!playing) {
       try {
         await audio.play();
-        playing = true;
-        btn.setAttribute("aria-pressed", "true");
-        localStorage.setItem("musicOn", "1");
+        setState(true);
       } catch {
         showToast("Music unavailable");
       }
     } else {
       audio.pause();
-      playing = false;
-      btn.setAttribute("aria-pressed", "false");
-      localStorage.setItem("musicOn", "0");
+      setState(false);
     }
   });
-
-  // Don't autoplay even if user opted-in last time — browsers block this.
-  // We just leave the toggle in its previous visual state as a hint.
-  if (localStorage.getItem("musicOn") === "1") {
-    btn.setAttribute("aria-pressed", "false"); // still off until user taps
-  }
 })();
 
 /* ---------- 9. On-scroll reveal ---------- */
