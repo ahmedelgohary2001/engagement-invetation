@@ -14,7 +14,7 @@ const CONFIG = {
   venue: {
     name: "Venice Hall · El Nasr Club",
     address: "Smouha, Alexandria, Egypt",
-    mapsUrl: "https://maps.app.goo.gl/zMzpdBTR5856iqLg9?g_st=iw"
+    mapsUrl: "https://maps.app.goo.gl/HsaA8M8Z5Fq2TGpp6"
   },
 
   hashtag: "#AhmedAndNada",
@@ -61,21 +61,35 @@ function showToast(msg) {
   showToast._timer = setTimeout(() => t.classList.remove("show"), 1800);
 }
 
-/* ---------- 3. Curtain reveal ---------- */
-(function curtain() {
-  const el = document.getElementById("curtain");
+/* ---------- 3. Envelope intro ---------- */
+(function envelope() {
+  const overlay = document.getElementById("envelope-overlay");
+  if (!overlay) return;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (reduce) {
-    el.classList.add("hidden");
+    overlay.classList.add("hidden");
     return;
   }
-  // small delay so initial paint completes
-  setTimeout(() => {
-    el.classList.add("open");
-    // remove from layer after animation
-    setTimeout(() => el.classList.add("hidden"), 2200);
-  }, 350);
+
+  let opened = false;
+  function open() {
+    if (opened) return;
+    opened = true;
+    overlay.classList.add("open");
+    // start music on this user gesture
+    if (typeof window.__startMusic === "function") window.__startMusic();
+    // remove overlay from the layer after the fly/fade completes (~1.85s)
+    setTimeout(() => overlay.classList.add("hidden"), 2000);
+  }
+
+  overlay.addEventListener("click", open);
+  overlay.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      open();
+    }
+  });
 })();
 
 /* ---------- 4. Countdown ---------- */
@@ -134,35 +148,6 @@ function showToast(msg) {
     `&location=${location}` +
     `&details=${details}`;
   document.getElementById("gcal-btn").href = gcalUrl;
-
-  // .ics download
-  document.getElementById("ics-btn").addEventListener("click", () => {
-    const ics = [
-      "BEGIN:VCALENDAR",
-      "VERSION:2.0",
-      "PRODID:-//AhmedAndNada//Engagement//EN",
-      "BEGIN:VEVENT",
-      `UID:engagement-${start.getTime()}@ahmedandnada`,
-      `DTSTAMP:${fmt(new Date())}`,
-      `DTSTART:${fmt(start)}`,
-      `DTEND:${fmt(end)}`,
-      `SUMMARY:Engagement of ${CONFIG.names.groom} & ${CONFIG.names.bride}`,
-      `LOCATION:${CONFIG.venue.name}, ${CONFIG.venue.address}`,
-      "DESCRIPTION:With love — see you there!",
-      "END:VEVENT",
-      "END:VCALENDAR"
-    ].join("\r\n");
-
-    const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "ahmed-and-nada-engagement.ics";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  });
 })();
 
 /* ---------- 6. Hashtag tap-to-copy ---------- */
@@ -200,8 +185,13 @@ function showToast(msg) {
     if (!typed) return;
     const hash = await sha256Hex(typed);
     const match = CONFIG.gate.find(g => g.passphraseHash === hash);
-    if (match) unlock(match);
-    // Wrong answer: silently do nothing. Easter-egg vibe.
+    if (match) {
+      unlock(match);
+    } else {
+      // Not a passphrase — treat it as a sweet note and thank them.
+      hint.textContent = "Thank you for your warm words 💗";
+      input.value = "";
+    }
   });
 })();
 
@@ -225,6 +215,9 @@ function showToast(msg) {
       // First gesture didn't unlock it; user can still tap the toggle.
     }
   }
+
+  // expose so the envelope intro can start music on its open gesture
+  window.__startMusic = tryPlay;
 
   // Try immediately (will succeed in Safari iOS sometimes, fail in Chrome).
   tryPlay();
@@ -274,4 +267,27 @@ function showToast(msg) {
     { threshold: 0.12 }
   );
   document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+})();
+
+/* ---------- 10. Details roll-up accordion ---------- */
+(function accordion() {
+  const items = Array.from(document.querySelectorAll(".acc-item"));
+  if (!items.length) return;
+
+  items.forEach(item => {
+    const trigger = item.querySelector(".acc-trigger");
+    trigger.addEventListener("click", () => {
+      const wasOpen = item.classList.contains("open");
+      // single-open: collapse everything first
+      items.forEach(i => {
+        i.classList.remove("open");
+        i.querySelector(".acc-trigger").setAttribute("aria-expanded", "false");
+      });
+      // then expand the clicked one if it had been closed
+      if (!wasOpen) {
+        item.classList.add("open");
+        trigger.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
 })();

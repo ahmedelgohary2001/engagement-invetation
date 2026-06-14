@@ -12,10 +12,25 @@
 </head>
 <body>
 
-  <!-- ===== Theater curtains ===== -->
-  <div class="curtain" id="curtain" aria-hidden="true">
-    <div class="curtain-half curtain-left"></div>
-    <div class="curtain-half curtain-right"></div>
+  <!-- ===== Envelope intro ===== -->
+  <div class="envelope-overlay" id="envelope-overlay" role="button" tabindex="0"
+       aria-label="Open the invitation">
+    <div class="env">
+      <div class="env-body">
+        <p class="env-names">Engagement Invitation</p>
+        <svg class="env-flourish" viewBox="0 0 120 24" aria-hidden="true">
+          <path d="M10 14 Q40 2 60 14 Q80 26 110 14" fill="none" stroke="#c87a8a" stroke-width="1.2"/>
+          <circle cx="60" cy="14" r="2.5" fill="#f4c6cb" stroke="#c87a8a" stroke-width="1"/>
+          <circle cx="35" cy="9"  r="2"   fill="#fdfaf3" stroke="#c47550" stroke-width="1"/>
+          <circle cx="85" cy="9"  r="2"   fill="#e7a4b3" stroke="#c87a8a" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="env-flap"></div>
+      <div class="env-seal" aria-hidden="true">
+        <span class="env-seal-initials">A&amp;N</span>
+      </div>
+    </div>
+    <p class="env-hint">tap to open</p>
   </div>
 
   <!-- ===== Hero ===== -->
@@ -44,7 +59,6 @@
         <span class="amp">&amp;</span>
         <span>Nada</span>
       </h1>
-      <p class="date-line">Friday · July 17, 2026 · 7:00 PM</p>
     </div>
 
     <svg class="flower flower-right" viewBox="0 0 120 200" aria-hidden="true">
@@ -86,28 +100,78 @@
   <!-- ===== Event details ===== -->
   <section class="section details-section reveal">
     <h2 class="section-title">The details</h2>
-    <p class="detail-line"><strong>Friday, July 17, 2026</strong></p>
-    <p class="detail-line">7:00 PM</p>
-    <p class="detail-line">Venice Hall · El Nasr Club</p>
-    <p class="detail-line">Smouha, Alexandria, Egypt</p>
+
+    <div class="detail-card">
+      <div class="detail-item">
+        <svg class="detail-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="16" rx="2.5"/>
+          <path d="M3 9.5h18M8 3v4M16 3v4"/>
+        </svg>
+        <div class="detail-text">
+          <span class="detail-main">Friday, July 17, 2026</span>
+          <span class="detail-sub">7:00 PM</span>
+        </div>
+      </div>
+
+      <div class="detail-divider"></div>
+
+      <div class="detail-item">
+        <svg class="detail-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/>
+          <circle cx="12" cy="10" r="2.5"/>
+        </svg>
+        <div class="detail-text">
+          <span class="detail-main">Venice Hall · El Nasr Club</span>
+          <span class="detail-sub">Smouha, Alexandria, Egypt</span>
+        </div>
+      </div>
+
+      <div class="detail-divider"></div>
+
+      <!-- Roll-up rows — edit the copy inside each .acc-panel-inner -->
+      <div class="accordion">
+        <div class="acc-item">
+          <button type="button" class="acc-trigger" aria-expanded="false" aria-controls="acc-dress">
+            <span class="acc-title">Dress code</span>
+            <svg class="acc-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-panel" id="acc-dress" role="region">
+            <div class="acc-panel-inner">
+              <p class="dress-note">Ladies, we kindly ask that you avoid the colors below. 💗</p>
+              <ul class="color-list" aria-label="Colors to avoid">
+                <li><span class="swatch" style="background:#FFFFFF"></span>White</li>
+                <li><span class="swatch" style="background:#F3ECDF"></span>Off-white</li>
+                <li><span class="swatch" style="background:#FFB6C9"></span>Pink &amp; its shades</li>
+                <li><span class="swatch" style="background:#D11A2A"></span>Red</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button type="button" class="acc-trigger" aria-expanded="false" aria-controls="acc-schedule">
+            <span class="acc-title">Schedule of the night</span>
+            <svg class="acc-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="acc-panel" id="acc-schedule" role="region">
+            <div class="acc-panel-inner">
+              <ul class="acc-schedule">
+                <li><time>7:00 PM</time> Reception &amp; welcome drinks</li>
+                <li><time>8:00 PM</time> Dinner is served</li>
+                <li><time>9:30 PM</time> Cake, music &amp; celebration</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="action-row">
-      <a class="btn"
-         href="https://maps.app.goo.gl/zMzpdBTR5856iqLg9?g_st=iw"
+      <a class="btn btn-primary"
+         href="https://maps.app.goo.gl/HsaA8M8Z5Fq2TGpp6"
          target="_blank" rel="noopener">Open in Google Maps</a>
       <a class="btn" id="gcal-btn" href="#" target="_blank" rel="noopener">Add to Google Calendar</a>
-      <button class="btn" id="ics-btn" type="button">Download .ics</button>
     </div>
-  </section>
-
-  <!-- ===== Map ===== -->
-  <section class="section map-section reveal">
-    <iframe
-      class="map"
-      title="Venice Hall, El Nasr Club, Alexandria"
-      src="https://www.google.com/maps?q=Venice+Hall+El+Nasr+Club+Smouha+Alexandria&output=embed"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"></iframe>
   </section>
 
   <!-- ===== Hashtag ===== -->
