@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ahmed &amp; Nada — Engagement</title>
+  <meta name="description" content="You're invited to the engagement of Ahmed & Nada — Friday, July 17, 2026 at Venice Hall, Alexandria." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== Theater curtains ===== -->
+  <div class="curtain" id="curtain" aria-hidden="true">
+    <div class="curtain-half curtain-left"></div>
+    <div class="curtain-half curtain-right"></div>
+  </div>
+
+  <!-- ===== Hero ===== -->
+  <header class="hero">
+    <svg class="flower flower-left" viewBox="0 0 120 200" aria-hidden="true">
+      <!-- lilies (Ahmed) -->
+      <g fill="none" stroke="#8a9b7a" stroke-width="1.5">
+        <path d="M60 180 Q55 140 60 100 Q65 60 60 20" />
+        <path d="M60 150 Q40 140 25 120" />
+        <path d="M60 130 Q80 125 95 110" />
+        <path d="M60 110 Q42 100 30 85" />
+      </g>
+      <g fill="#fdfaf3" stroke="#c47550" stroke-width="1.2">
+        <!-- lily blossom top -->
+        <path d="M60 20 Q48 0 55 -5 Q60 -2 60 10 Q60 -2 65 -5 Q72 0 60 20 Z" transform="translate(0 12)" />
+        <path d="M60 90 Q44 78 52 70 Q60 76 60 88 Q60 76 68 70 Q76 78 60 90 Z" />
+        <path d="M28 118 Q18 108 22 100 Q30 104 30 116 Q30 104 38 102 Q42 110 28 118 Z" />
+        <path d="M96 108 Q86 96 92 90 Q100 94 100 106 Q100 94 108 92 Q112 100 96 108 Z" />
+      </g>
+    </svg>
+
+    <div class="hero-text">
+      <p class="kicker">You're invited to our engagement</p>
+      <h1 class="names">
+        <span>Ahmed</span>
+        <span class="amp">&amp;</span>
+        <span>Nada</span>
+      </h1>
+      <p class="date-line">Friday · July 17, 2026 · 7:00 PM</p>
+    </div>
+
+    <svg class="flower flower-right" viewBox="0 0 120 200" aria-hidden="true">
+      <!-- roses + tulips (Nada) -->
+      <g fill="none" stroke="#8a9b7a" stroke-width="1.5">
+        <path d="M60 180 Q65 140 60 100 Q55 60 60 20" />
+        <path d="M60 150 Q80 138 95 118" />
+        <path d="M60 128 Q40 122 25 108" />
+        <path d="M60 108 Q78 98 90 82" />
+      </g>
+      <!-- rose -->
+      <g fill="#f4c6cb" stroke="#c87a8a" stroke-width="1.2">
+        <circle cx="60" cy="30" r="14" />
+        <path d="M60 18 Q54 30 60 42 Q66 30 60 18 Z" fill="#c87a8a" opacity=".6" />
+      </g>
+      <!-- tulip (left swoop) -->
+      <g fill="#e7a4b3" stroke="#c87a8a" stroke-width="1.2">
+        <path d="M25 108 Q22 95 30 90 Q40 92 40 105 Q40 115 32 116 Q26 116 25 108 Z" />
+      </g>
+      <!-- tulip (right swoop) -->
+      <g fill="#f0b9a4" stroke="#c47550" stroke-width="1.2">
+        <path d="M90 82 Q86 70 94 65 Q104 68 104 80 Q104 90 96 91 Q90 90 90 82 Z" />
+      </g>
+    </svg>
+  </header>
+
+  <!-- ===== Countdown ===== -->
+  <section class="section countdown-section reveal">
+    <h2 class="section-title">Counting the days</h2>
+    <div class="countdown" id="countdown" aria-live="polite">
+      <div class="cd-cell"><span class="cd-num" id="cd-days">—</span><span class="cd-label">days</span></div>
+      <div class="cd-cell"><span class="cd-num" id="cd-hours">—</span><span class="cd-label">hours</span></div>
+      <div class="cd-cell"><span class="cd-num" id="cd-mins">—</span><span class="cd-label">minutes</span></div>
+      <div class="cd-cell"><span class="cd-num" id="cd-secs">—</span><span class="cd-label">seconds</span></div>
+    </div>
+    <p class="countdown-done" id="countdown-done" hidden>Thank you for being part of our story.</p>
+  </section>
+
+  <!-- ===== Event details ===== -->
+  <section class="section details-section reveal">
+    <h2 class="section-title">The details</h2>
+    <p class="detail-line"><strong>Friday, July 17, 2026</strong></p>
+    <p class="detail-line">7:00 PM</p>
+    <p class="detail-line">Venice Hall · El Nasr Club</p>
+    <p class="detail-line">Smouha, Alexandria, Egypt</p>
+
+    <div class="action-row">
+      <a class="btn"
+         href="https://maps.app.goo.gl/zMzpdBTR5856iqLg9?g_st=iw"
+         target="_blank" rel="noopener">Open in Google Maps</a>
+      <a class="btn" id="gcal-btn" href="#" target="_blank" rel="noopener">Add to Google Calendar</a>
+      <button class="btn" id="ics-btn" type="button">Download .ics</button>
+    </div>
+  </section>
+
+  <!-- ===== Map ===== -->
+  <section class="section map-section reveal">
+    <iframe
+      class="map"
+      title="Venice Hall, El Nasr Club, Alexandria"
+      src="https://www.google.com/maps?q=Venice+Hall+El+Nasr+Club+Smouha+Alexandria&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </section>
+
+  <!-- ===== Hashtag ===== -->
+  <section class="section hashtag-section reveal">
+    <h2 class="section-title">Share the joy</h2>
+    <button class="hashtag" id="hashtag" type="button" aria-label="Copy hashtag #AhmedAndNada to clipboard">
+      #AhmedAndNada
+      <span class="hashtag-hint">tap to copy</span>
+    </button>
+  </section>
+
+  <!-- ===== Easter-egg gate ===== -->
+  <section class="section gate-section reveal">
+    <h2 class="section-title">A little something for our closest</h2>
+
+    <div id="gate-prompt">
+      <p class="gate-label">If we sent you the word, type it below.</p>
+      <form id="gate-form" autocomplete="off">
+        <input type="text" id="gate-input" class="gate-input" placeholder="the word" aria-label="passphrase" />
+        <button class="btn" type="submit">Unlock</button>
+      </form>
+      <p class="gate-hint" id="gate-hint" aria-live="polite"></p>
+    </div>
+
+    <div id="gate-reveal" class="gate-reveal" hidden>
+      <p class="gate-note" id="gate-note"></p>
+      <a class="btn btn-primary" id="gate-album" href="#" target="_blank" rel="noopener">Open the album</a>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <svg viewBox="0 0 200 30" aria-hidden="true" class="footer-floral">
+      <path d="M10 20 Q60 5 100 20 Q140 35 190 20" fill="none" stroke="#c87a8a" stroke-width="1.2"/>
+      <circle cx="60" cy="14" r="3" fill="#f4c6cb" stroke="#c87a8a" stroke-width="1"/>
+      <circle cx="100" cy="20" r="3.5" fill="#fdfaf3" stroke="#c47550" stroke-width="1"/>
+      <circle cx="140" cy="26" r="3" fill="#e7a4b3" stroke="#c87a8a" stroke-width="1"/>
+    </svg>
+    <p>July 17, 2026 · Alexandria</p>
+  </footer>
+
+  <!-- ===== Music toggle ===== -->
+  <button class="music-toggle" id="music-toggle" type="button" aria-label="Toggle background music" aria-pressed="false">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path id="music-icon" d="M9 18V5l12-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="18" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <line id="music-slash" x1="3" y1="21" x2="21" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <audio id="bg-audio" src="music.mp3" loop preload="none"></audio>
+
+  <!-- ===== Toast ===== -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
