@@ -583,6 +583,24 @@ body {
   color: var(--ink-soft);
 }
 
+/* ===== Music recommendation ===== */
+.music-rec-icon {
+  width: 34px;
+  height: 34px;
+  color: var(--rose);
+  margin-bottom: .85rem;
+}
+
+.music-rec-note {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 32ch;
+  margin: 0 auto 1.5rem;
+}
+
 /* ===== Gate ===== */
 .gate-section { padding-bottom: 2rem; }
 
